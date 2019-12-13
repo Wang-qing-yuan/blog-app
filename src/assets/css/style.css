@@ -1,0 +1,103 @@
+/* 风格样式设置 */
+
+/* 字体设置 */
+.w-title {
+	font-size: 18px;
+	font-weight: 700;
+	color: rgba(0, 0, 0, 0.8);
+}
+
+.w-sub-title {
+	font-size: 16px;
+	font-weight: 500;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.w-meta {
+	font-size: 12px;
+	color: #b4b4b4;
+}
+
+/* ---------主题设置----------- */
+.w-primary-theme {
+	background-color: #009688;
+	color: #fff;
+}
+
+.w-warning-theme {
+	background-color: #fb8c00;
+	color: #fff;
+}
+
+.w-success-theme {
+	background-color: #4caf50;
+	color: #fff;
+}
+
+.w-disable-theme {
+	background-color: #e0e0e0;
+	color: #fff;
+}
+
+/* --------------按钮设置------------ */
+.comments {
+	border: none;
+	margin-right: 25px;
+	background-color: rgba(68, 51, 74, 0.8);
+	padding: 7px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition-duration: 0.4s;
+	color: white;
+}
+.comments:hover {
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 10px 20px 0 white;
+}
+.comments:active {
+  background-color: rgb(68, 51, 74);
+  box-shadow: 0 5px #666;
+  transform: translateY(10px);
+}
+.w-btn {
+	border: none;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.w-btn-round {
+	border-radius: 20px;
+}
+
+.w-btn-circle {
+	border-radius: 50%;
+}
+
+.w-btn-normal {
+	width: 120px;
+	height: 35px;
+}
+
+.w-btn-large {
+	width: 140px;
+	height: 45px;
+}
+
+/* 表单元素样式 */
+.w-input-box {
+	display: block;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	height: 35px;
+}
+
+/* 阴影样式 */
+.w-shadow {
+	box-shadow: 2px 5px 10px #aaa;
+}
+
+/* 头像样式 */
+.w-avatar {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
