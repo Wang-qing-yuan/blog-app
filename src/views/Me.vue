@@ -7,14 +7,15 @@
 				<div class="w-avatar"><img :src="user.avatar" /></div>
 				<div class="amend">
 					<h1>{{ user.nickname }}</h1>
-					<div class="card " @mouseenter="showGender()" @mouseleave="hideGender()">
+					
+					
+					<div class="card">
 						<div class="a w-fx-center"><h3>性别</h3></div>
-						<div class="w-fx-center">
-							<h3 v-if="statusGender">{{ user.gender }}</h3>
-							<input type="text" :value="user.gender" v-else>
+						
+						<div class="w-fx-center" >
+							<h3>{{ user.gender }}</h3>
 						</div>
-						<i v-if="updateGenderIcon" class="w-fx-center" @click="updateGender()">修改</i>
-						<i v-if="saveGenderIcon" class="w-fx-center" @click="saveGender()">保存</i>
+						
 					</div>
 					<div class="card">
 						<div class="a w-fx-center"><h3>一句话介绍自己</h3></div>
@@ -33,6 +34,7 @@
 						<div class="w-fx-center">
 							<h3>{{ user.birthday.year }}年{{ user.birthday.month }}月{{ user.birthday.day }}日</h3>
 						</div>
+						 <div class="birthday w-fx-center"><input type="date" name="bday"><input type="submit"></div>     
 					</div>
 					<div class="card ">
 						<div class="a w-fx-center"><h3>手机号码</h3></div>
@@ -71,8 +73,7 @@ export default {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
 			updateGenderIcon: false,
-			saveGenderIcon: false,
-			statusGender: true,
+			saveGenderIcon: false
 		};
 	},
 	created() {},
@@ -82,32 +83,9 @@ export default {
 				let _u = _url.substring(8);
 				return 'https://images.weserv.nl/?url=' + _u;
 			}
-		},
-		enter(index) {
-			if (this.show[index] === false) {
-				this.show.splice(index, 1, true);
-			}
-		},
-		leave(index) {
-			if (this.show[index] === true) {
-				this.show.splice(index, 1, false);
-			}
-		},
-		showGender() {
-			this.updateGenderIcon = true;
-		},
-		hideGender() {
-			this.updateGenderIcon = false;
-		},
-		updateGender() {
-			this.statusGender = false;
-			this.saveGenderIcon = true;
-		},
-		saveGender() {
-			this.updateGenderIcon = false;
-			this.statusGender = true;
-			this.saveGenderIcon = false;
 		}
+		
+		
 	}
 };
 </script>
@@ -117,7 +95,7 @@ export default {
 		margin-left: 1%;
 	}
 .container {
-	background-image: linear -gradient(rgb(31, 31, 31), rgb(68, 51, 74), rgb(31, 31, 31));
+	 background-image: linear-gradient(to right,rgb(182, 118, 90), rgb(68, 51, 74),rgb(31,31,31));
 	display: flex;
 	width: 100%;
 	height: auto;
@@ -130,12 +108,11 @@ h4,
 h5,
 h6,
 p {
-	color: black;
+	color: white;
 }
 .row {
 	display: flex;
-	background-color: rgb(237, 236, 237);
-}
+	}
 
 .blank {
 	flex: 1 1 10%;
@@ -171,6 +148,24 @@ p {
 .a {
 	width: 170px;
 }
+.card:hover{
+					
+					/*渐变背景*/
+					background-image: -webkit-linear-gradient(left,rgb(182, 118, 90),rgb(31,31,31),rgb(68,51,74));
+					color: transparent;
+					background-size: 200% 200%;
+					/*背景图片向水平方向扩大一倍，这样background-position才有移动与变化的空间*/
+					/* 动画 */
+					animation: masked-animation 2s linear;
+				}
+				 @keyframes masked-animation {
+				            0% {
+				                background-position: 0 0;   /*background-position 属性设置背景图像的起始位置。*/
+				            }
+				            100% {
+				                background-position: -200% 0;
+				            }
+	}
 .btn {
 	border: none;
 	margin: 20px;

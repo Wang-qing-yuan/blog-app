@@ -101,3 +101,36 @@
 	height: 35px;
 	border-radius: 50%;
 }
+
+.roll {
+	width: 90%;
+	background-image: linear-gradient(#e66465, #9198e5);
+	position: relative;
+	animation: rolll 30s infinite;
+	padding: 20px;
+	margin-top: 100px;
+	border-radius: 20px;
+}
+.roll p {
+	color: rgb(31, 31, 31);
+}
+@keyframes rolll {
+	0% {
+		transform: rotate(-7deg);
+	}
+	18% {
+		transform: rotate(7deg);
+	}
+	20% {
+		transform: rotate(-7deg);
+	}
+	80% {
+		transform: rotate(7deg);
+	}
+	85% {
+		transform: rotate(-7deg);
+	}
+	100% {
+		transform: rotate(7deg);
+	}
+}

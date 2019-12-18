@@ -27,7 +27,7 @@
 			<div class="userdetail-right">
 				<div class="banner-card"><img :src="user.banner" /></div>
 				<div class="banner-book ">
-					<div class="book" v-for="(item, index) in article" :key="index">
+					<div class="book" v-for="(item, index) in article" :key="index" @click="toADetail(item.article.id)">
 						<h3>{{ item.article.title }}</h3>
 						<div class="w-row">
 							<img :src="item.article.thumbnail" />
@@ -123,6 +123,9 @@ export default {
 			if (this.show[index] === false) {
 				this.show.splice(index, 1, true);
 			}
+		},
+		toADetail(id) {
+			this.$router.push('/articleDetail/' + id);
 		},
 		leave(index) {
 			if (this.show[index] === true) {

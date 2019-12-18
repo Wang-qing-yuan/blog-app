@@ -7,8 +7,11 @@
 			</div>
 
 			<div class="tab-box" v-if="show && selected === 0">
-				<input type="text" placeholder="请输入手机号/邮箱" v-model="userDto.mobile" />
-				<input type="password" placeholder="请输入6-16位密码" minlength="6" maxlength="16" v-model="userDto.password" />
+				<div class="w-login w-center">
+					<input type="text" claplaceholder="请输入手机号" v-model="userDto.mobile" />
+					<input type="password" placeholder="请输入6-16位密码" minlength="6" maxlength="16" v-model="userDto.password" />
+				</div>
+
 				<div class="code-box">
 					<input type="text" placeholder="请输入验证码" v-model="userDto.code" />
 					<div class="img"><img ref="codeImg" @click="refresh()" style="cursor: pointer;" /></div>
@@ -19,36 +22,20 @@
 
 			<div class="tab-box" v-if="show && selected === 1">
 				<input type="text" placeholder="请设置用户名" v-model="userDto.nickname" />
+				<!-- <input type="tel" placeholder="生日" minlength="11" maxlength="11" v-model="userDto.getBirthday"/> -->
+				<input type="tel" placeholder="请绑定手机号" minlength="11" maxlength="11" v-model="userDto.mobile" :disabled="yzmDisabled" @input.prevent="checkLength" />
 				<input type="password" placeholder="请设置6-16位密码" minlength="6" maxlength="16" v-model="userDto.password" />
 				<input type="password" placeholder="请确认密码" minlength="6" maxlength="16" v-model="pwd2" />
-				
-				<input
-					
-					type="tel"
-					placeholder="请绑定手机号"
-					minlength="11"
-					maxlength="11"
-					v-model="userDto.mobile"
-					:disabled="yzmDisabled"
-					@input.prevent="checkLength"
-				/>
-				<div class="code-box">
-					<input type="text" placeholder="请输入验证码" v-model="userDto.code" />
-					<div class="img"><img ref="codeImg" @click="refresh()" style="cursor: pointer;" /></div>
-				</div>
+
 				<input type="submit" class="regist-btn" value="注册" @click="signUp(userDto)" />
 			</div>
 
 			<div class="line-box" v-if="show && selected === 0">
 				<span class="line"></span>
-				<span class="login-3rd">第三方登录</span>
+				
 				<span class="line"></span>
 			</div>
 
-			<div class="icon-box" v-if="show && selected === 0">
-				<i class="iconfont" style="color: rgb(24, 172, 252)">&#xe626;</i>
-				<i class="iconfont" style="color: rgb(103, 204, 121)">&#xe6c3;</i>
-			</div>
 
 			<div>
 				<div class="message" v-if="pop">
@@ -74,29 +61,30 @@ export default {
 				password: '',
 				code: ''
 			},
-			codeDisabled: true,		
+			codeDisabled: true,
 			info: '',
 			isActive: true,
 			show: true,
-			selected: 0,			
+			selected: 0,
 			status: '',
 			yzmDisabled: false,
-			user: null,		
+			user: null,
 			token: ''
 		};
 	},
 
 	created() {
 		this.axios.get('http://localhost:8080/api/code', { responseType: 'blob' }).then(res => {
-					// console.log(res);
-					var img = this.$refs.codeImg;
-					let url = window.URL.createObjectURL(res.data);
-					img.src = url;
-					console.log(res.headers);
-					//取得后台通过响应头返回的sessionId的值
-					this.token = res.headers['access-token'];
-					console.log(this.token);
-				});
+			// console.log(res);
+			var img = this.$refs.codeImg;
+			let url = window.URL.createObjectURL(res.data);
+			img.src = url;
+			console.log(res.headers);
+			//取得后台通过响应头返回的sessionId的值
+			this.token = res.headers['access-token'];
+			console.log(this.token);
+		});
+		// this.$router.go(0)
 	},
 	computed: {
 		// 解决403图片缓存问题
@@ -106,25 +94,24 @@ export default {
 				return 'https://images.weserv.nl/?url=' + _u;
 			}
 		}
-	
 	},
 
 	methods: {
-
 		signIn(userDto) {
 			this.axios({
 				method: 'post',
-				url:  'http://localhost:8080/api/user/sign-in',
+				url: 'http://localhost:8080/api/user/sign-in',
 				data: JSON.stringify(this.userDto),
 				headers: {
-					'Access-Token': this.token  //将token放在请求头带到后端
+					'Access-Token': this.token //将token放在请求头带到后端
 				}
 			}).then(res => {
-				console.log(res.data)
+				console.log(res.data);
 				if (res.data.msg === '成功') {
 					alert('登录成功');
 					localStorage.setItem('user', JSON.stringify(res.data.data));
 					this.$router.push('/');
+					this.$router.go(0);
 				} else {
 					alert(res.data.msg);
 					this.userDto.code = '';
@@ -132,21 +119,21 @@ export default {
 			});
 		},
 		signUp(userDto) {
-					this.axios({
-						method: 'post',
-						url:'http://localhost:8080/api/user/sign-up',
-						data: JSON.stringify(this.userDto)
-					}).then(res => {
-						console.log(res.data.msg)
-						if (res.data.msg === '成功') {
-							alert('注册成功');
-							this.$router.push('/sign-in');
-						} else {
-							alert(res.data.msg);
-							console.log(res.data.msg);
-						}
-					});
-				},
+			this.axios({
+				method: 'post',
+				url: 'http://localhost:8080/api/user/sign-up',
+				data: JSON.stringify(this.userDto)
+			}).then(res => {
+				console.log(res.data.msg);
+				if (res.data.msg === '成功') {
+					alert('注册成功');
+					this.$router.push('/');
+				} else {
+					alert(res.data.msg);
+					console.log(res.data.msg);
+				}
+			});
+		},
 
 		refresh() {
 			this.axios.get('http://localhost:8080/api/code', { responseType: 'blob' }).then(res => {
@@ -223,7 +210,7 @@ export default {
 					alert('注册成功');
 					localStorage.setItem('user', JSON.stringify(res.data.data));
 					this.$router.push('/');
-				} 
+				}
 			});
 		}
 	}
@@ -239,34 +226,18 @@ export default {
 }
 
 .full {
-	background-image: linear-gradient(rgb(31,31,31),rgb(68,51,74),rgb(255,254,250));
-	height: 100%;
+	background-image: linear-gradient(rgb(182, 118, 90), rgb(68, 51, 74));
+	height: 500px;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-/* 第三方图标 */
-@font-face {
-	font-family: 'iconfont'; /* project id 1474541 */
-	src: url('//at.alicdn.com/t/font_1474541_e3yt5mn27n.eot');
-	src: url('//at.alicdn.com/t/font_1474541_e3yt5mn27n.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1474541_e3yt5mn27n.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1474541_e3yt5mn27n.woff') format('woff'), url('//at.alicdn.com/t/font_1474541_e3yt5mn27n.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1474541_e3yt5mn27n.svg#iconfont') format('svg');
-}
-.iconfont {
-	font-family: 'iconfont' !important;
-	font-size: 40px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
-	-moz-osx-font-smoothing: grayscale;
-}
 
 .login-box {
-	background-color: #ffffff;
+	background-color: rgb(31, 31, 31);
 	width: 400px;
-	height: 550px;
+
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
@@ -278,9 +249,7 @@ export default {
 	align-items: center;
 	justify-content: space-around;
 	width: 100%;
-	height: 10%;
-	background-color: rgb(236, 239, 241);
-	border-radius: 10px;
+	background-color: rgb(20, 20, 20);
 	margin-bottom: 10px;
 }
 .tab-item {
@@ -295,6 +264,22 @@ export default {
 	font-weight: 600;
 	border-bottom: 2px solid #00bbdd;
 }
+.w-login {
+	margin-top: 20px;
+
+}
+/* 文本框 */
+input {
+	background-color: rgb(20, 20, 20);
+	width: 87%;
+	height: 50px;
+border-radius: 5px;
+	font-size: 25px;
+	font-weight: 600;
+	font-family: '楷体';
+	color: white;
+	border: 1px solid black;
+}
 /* 中间div */
 .tab-box {
 	height: 78%;
@@ -306,38 +291,36 @@ export default {
 	justify-content: center;
 	padding: 10px;
 }
-/* 文本框 */
-input {
-	margin: 5%;
-	width: 87%;
-	height: 40px;
-	border-radius: 10px;
-	font-size: 25px;
-	font-weight: 600;
-	font-family: '楷体';
-	outline: none;
-	border: none;
-	background-color: #eeeeee;
+.code-box{
+	margin-top: 20px;
+	
 }
+.code-box img{
+	border-radius: 5px;
+	position: relative;
+
+	width: 150px;
+}
+
+
 /* 登录和注册按钮 */
 .regist-btn,
 .login-btn {
-	background-color: rgb(30, 136, 229);
+	background-color: rgb(52,158,144);
 	cursor: pointer;
 }
 .regist-btn:hover,
 .login-btn:hover {
 	cursor: pointer;
-	background-color: rgb(66, 165, 245);
+	background-color: rgb(72,53,74);
 }
 /* 没有账号的情况 */
 .span-tab {
-	margin-top: 5%;
 	cursor: pointer;
-	color: rgb(113, 156, 252);
+	color:rgb(52,158,144);
 }
 .span-tab:hover {
-	color: #00bbdd;
+	color: rgb(72,53,74);
 }
 /* 注册界面的div */
 .tab-box .tel-box {
@@ -369,24 +352,8 @@ input {
 	justify-content: space-around;
 	align-items: center;
 }
-.line {
-	border-bottom: 3px solid #9b9b9b;
-	flex: 0 0 33%;
-}
-.login-3rd {
-	font-size: 20px;
-	font-weight: 400px;
-	font-family: '楷体';
-}
-/* 第三方登录的图标div */
-.icon-box {
-	cursor: pointer;
-	width: 50%;
-	margin: 0 auto;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-}
+
+
 
 /* （遮罩层）提示框 */
 .message {

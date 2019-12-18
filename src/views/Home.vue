@@ -22,51 +22,64 @@
 					</div>
 
 					<ul class="hot">
-						<img src="../assets/css/月亮.jpg" />
+						<iframe src="http://i.tianqi.com/index.php?c=code&id=7&icon=1&num=3" frameborder="0" style="margin: 10% "></iframe>
+
 						<li>
 							<router-link to="/article"><h4>Hot Articles</h4></router-link>
 						</li>
 					</ul>
-					<div class="card1"><h1>Home</h1>
-						<div class="card11">
-							<h1>|||||||||||||||||||</h1>
-						</div>
+					<div class="card1">
+						<h1>Home</h1>
+						<div class="card11"><h1>|||||||||||||||||||</h1></div>
 					</div>
-					
+
 					<div class="tu"><img src="../assets/css/书.jpg" /></div>
 					<div class="yu">
-						<div class="yuan"><h1>电子书</h1>
-								<p>
-									电子书是指将文字、图片、声音、影像等讯息内容数字化的出版物和植入或下载数字化文字、
-									图片、声音、影像等讯息内容的集存储和显示终端于一体的手持阅读器。代表人们所阅读的数字化出版物， 区别于以纸张为载体的传统出版物。电子书
-									通过数码方式记录在以光、电、磁为介质的设备中， 必须借助于特定的设备来读取、复制和传输 。
-								</p>
+						<div class="yuan">
+							<h1>电子书</h1>
+							<p>
+								电子书是指将文字、图片、声音、影像等讯息内容数字化的出版物和植入或下载数字化文字、
+								图片、声音、影像等讯息内容的集存储和显示终端于一体的手持阅读器。代表人们所阅读的数字化出版物， 区别于以纸张为载体的传统出版物。电子书
+								通过数码方式记录在以光、电、磁为介质的设备中， 必须借助于特定的设备来读取、复制和传输 。
+							</p>
 						</div>
 					</div>
 				</div>
-				
-				
-				
+
 				<div class="card-right">
 					<div class="zuozhe">
 						<p>author</p>
 						<img class="zuo" src="../assets/css/用户.jpg" />
 
-						<div class="author" v-for="(user, index) in users" :key="index" >
-							<img :src="user.avatar" @click="toDetail(user.id)"/>
+						<div class="author" v-for="(user, index) in users" :key="index">
+							<img :src="user.avatar" @click="toDetail(user.id)" />
 							<p>{{ user.nickname }}</p>
 						</div>
 						<button class="btn" @click="showAll()">查看更多</button>
 					</div>
 				</div>
 			</div>
-			
-			<div class="end w-fx-center">
-				<p>联系我@王庆媛</p>
-			</div>
-			
 
-			
+			<!-- <div class="w-center">
+			<div class="neon-text">
+				CL
+				<span class="neon-blink">O</span>
+				C
+				<span class="neon-blink">K</span>
+			</div>
+			<div id="datetime"><input type="button" value="当前时间" @click="showTime" class="timer-num" /></div>
+</div> -->
+
+			<ul id="list">
+				<li class = "item"></li>
+				<li class = "item"></li>
+				<li class = "item"></li>
+				<li class = "item"></li>
+				<li class = "item"></li>
+				<li class = "item"></li>
+			</ul>
+
+			<div class="end w-fx-center"><p>联系我@王庆媛</p></div>
 		</div>
 	</div>
 </template>
@@ -82,6 +95,8 @@ export default {
 			console.log(res.data.data);
 			this.users = res.data.data;
 		});
+
+		// setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleTimeString();", 1000);
 	},
 	methods: {
 		toDetail(id) {
@@ -89,6 +104,19 @@ export default {
 		},
 		showAll() {
 			this.$router.push('/user');
+		},
+		begin: function() {
+			clearInterval(this.timer);
+			this.timer = setInterval(function() {
+				var div = document.getElementById('grid5');
+				var r = Math.round(Math.random() * 255);
+				var g = Math.round(Math.random() * 255);
+				var b = Math.round(Math.random() * 255);
+				div.style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+			}, 1000);
+		},
+		end: function() {
+			clearInterval(this.timer);
 		}
 	},
 	computed: {
@@ -104,9 +132,61 @@ export default {
 </script>
 
 <style scoped>
+	#list { 
+	 display: flex; 
+height: 150px;
+width: 300px;
+background-color: white;
+	 flex-flow:row nowrap;
+	  overflow-x: auto; 
+	
+	}
+	
+	.item { 
+		margin-left: 20px; 
+	height: 100px;
+	width: 100px;
+	border: 1px solid olivedrab;
+	 display: inline-block; }
+
+.neon-text {
+	font-family: 'Monoton', cursive;
+	font-size: 100px;
+	color: #bbdefb;
+	text-shadow: -10px 0px 100px #bbdefb, 0px 0px 2px #bbdefb;
+}
+.neon-blink {
+	animation: neon 3s infinite;
+}
+#datetime {
+	font-family: 'Monoton', cursive;
+	font-size: 50px;
+	color: white;
+	text-shadow: -3px 0px 5px #ffeb3b, 10px 20px 20px #ffeb3b;
+}
+.neon-by {
+	color: #bbdefb;
+	text-shadow: -3px 0px 5px #bbdefb, 0px 0px 2px #bbdefb;
+}
+@keyframes neon {
+	0%,
+	30%,
+	32%,
+	34% {
+		color: #222;
+		text-shadow: -3px 0px 5px #222, 0px 0px 2px #222;
+	}
+	31%,
+	33%,
+	35%,
+	100% {
+		color: #bbdefb;
+		text-shadow: -3px 0px 5px #bbdefb, 0px 0px 2px #bbdefb;
+	}
+}
 .container {
 	width: 100%;
-	background-image: linear-gradient(rgb(31,31,31),rgb(68,51,74),rgb(31,31,31));
+	background-image: linear-gradient(rgb(31, 31, 31), rgb(68, 51, 74), rgb(31, 31, 31));
 }
 .card-left {
 	flex: 1 1 70%;
@@ -125,7 +205,6 @@ export default {
 
 #myGreenDIV {
 	-webkit-animation: g 5s infinite;
-	
 }
 .card4 {
 	width: 80%;
@@ -274,9 +353,9 @@ export default {
 .card11 h1 {
 	color: white;
 }
-.yu{
+.yu {
 	position: relative;
-	top:-25%;
+	top: -25%;
 	left: 35%;
 	height: 300px;
 	width: 60%;
@@ -285,48 +364,47 @@ export default {
 	height: 10%;
 	width: 100%;
 	position: relative;
-	animation: bianhua 15s infinite;
+	animation: bianhua 10s infinite;
 	text-align: center;
-	
+	overflow: hidden;
 }
-.yuan p,
-h1 {
-	color: rgb(31, 31, 31);
+.yuan p{
+	color:white;
+	font-size: 20px;
 }
 
 @keyframes bianhua {
 	0% {
-		background: rgba(171, 71, 188,0.7);
+		background: rgba(171, 71, 188, 0.7);
 		border-radius: 400px;
 		height: 10%;
 		width: 40%;
 		right: 30%;
 	}
 	5% {
-		background: rgba(236, 64, 122,0.7);
+		background: rgba(236, 64, 122, 0.7);
 		border-radius: 300px;
 	}
 	10% {
-		background: rgba(239, 83, 80,0.7);
+		background: rgba(239, 83, 80, 0.7);
 		border-radius: 200px;
 	}
 	15% {
-		background: rgba(66, 165, 245,0.7);
+		background: rgba(66, 165, 245, 0.5);
 		border-radius: 100px;
 	}
 	20% {
-		background: rgba(38, 198, 218,0.7);
+		background: rgba(38, 198, 218, 0.3);
 		border-radius: 50px;
 		height: 70%;
 		width: 100%;
-		right:0%;
+		right: 0%;
 	}
 	90% {
-		background: rgba(255, 192, 203,0.7);
+		background: rgba(255, 192, 203, 0.2);
 		border-radius: 50px;
 		height: 70%;
 		width: 100%;
-		
 	}
 }
 .hot {
@@ -336,11 +414,7 @@ h1 {
 	left: 70%;
 	animation: fangkuai 5s infinite;
 	padding: 20px;
-}
-.hot img {
-	width: 85%;
-	height: 85%;
-	border-radius: 300px;
+	background-image: url(../assets/css/月亮.jpg);
 }
 @keyframes g {
 	50% {
@@ -408,7 +482,7 @@ h1 {
 	border-bottom: 10px solid rgb(31, 31, 31);
 	border-right: 10px solid rgb(31, 31, 31);
 }
-.author img:hover{
+.author img:hover {
 	transform: rotate(30deg);
 }
 
@@ -426,7 +500,7 @@ h1 {
 .btn:hover {
 	background-color: rgb(0, 131, 143);
 }
-.music{
+.music {
 	position: relative;
 	left: 500px;
 	border-radius: 300px;

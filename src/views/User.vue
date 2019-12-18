@@ -15,7 +15,6 @@
 							<h3>{{ user.nickname }}</h3>
 							<h5>{{ user.gender }}</h5>
 							<h5>{{ user.address }}</h5>
-							<!-- <h5>{{ user.introduction }}</h5> -->
 							<h5 v-if="show[index]" class="hidden-content">{{ user.introduction }}</h5>
 						</div>
 					</div>
@@ -107,7 +106,6 @@ export default {
 .container {
 	background-image: linear-gradient(rgb(31,31,31),rgb(68,51,74),rgb(31,31,31));
 	width: 100%;
-	/* height: 2000px; */
 	display: flex;
 	box-sizing: border-box;
 }
@@ -123,7 +121,6 @@ li {
 	width: 0px;
 	height: 0px;
 	border: 30px solid rgb(31, 31, 31);
-	
 	border-bottom: 30px solid white;
 	position: relative;
 	animation: shang 10s infinite;
@@ -181,7 +178,7 @@ li {
 }
 .user-card img:hover {
 	flex: 0 0 40%;
-	border-radius: 0px;
+	
 	border-bottom-left-radius: 100px;
 	border-bottom-right-radius: 100px;
 	color: white;

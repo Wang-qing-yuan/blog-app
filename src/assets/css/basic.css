@@ -31,6 +31,7 @@ ul {
 	list-style: none;
 }
 
+
 /* ---------------布局设置-------------- */
 .w-container {
 	width: 100%;
@@ -82,6 +83,7 @@ ul {
 
 /* flex横向布局的对齐,横向左对齐，纵向居中 */
 .w-fx-left {
+	
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
